@@ -1,0 +1,32 @@
+version: '3.2'
+
+services:
+  db:
+    image: postgres
+
+  tikpee:
+    build: .
+    image: crawler-image
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+#  makemigration:
+#    image: crawler-image
+#    command: python manage.py makemigrations
+#    volumes:
+#      - .:/code
+#    depends_on:
+#      - db
+#
+#  migration:
+#    image: crawler-image
+#    command: python manage.py migrate --noinput
+#    volumes:
+#      - .:/code
+#    depends_on:
+#      - db
